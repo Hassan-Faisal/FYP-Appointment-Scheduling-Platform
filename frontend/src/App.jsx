@@ -4,7 +4,7 @@ import './App.css'
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-
+import VerifyEmail from "./pages/auth/VerifyEmail";
 // Patient Pages
 import PatientDashboard from "./pages/patient/Dashboard";
 import BookAppointment from "./pages/patient/BookAppointment";
@@ -29,6 +29,7 @@ export default function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
 
         {/* Patient */}
         <Route path="/patient/dashboard" element={<PatientDashboard />} />

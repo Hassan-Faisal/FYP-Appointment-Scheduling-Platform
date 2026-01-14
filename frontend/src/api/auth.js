@@ -1,7 +1,7 @@
 import api from "./api";
 
 // LOGIN
-export const loginUser = async (email, password) => {
+export const loginUser = async ( email, password) => {
   const response = await api.post("/auth/login", {
     email,
     password,
@@ -22,3 +22,12 @@ export const forgotPassword = async (email) => {
   });
   return response.data;
 };
+
+
+export const verifyEmail = (token) =>
+  api.get(`/auth/verify-email?token=${token}`);
+
+export const resendVerification = (email) =>
+  api.post("/auth/resend-verification", null, {
+    params: { email }
+  });

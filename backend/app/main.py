@@ -6,16 +6,29 @@
 
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.api import auth, patient, doctor, admin
 from app.api import appointments
 from app.api import admin_schedule, admin_breaks, slots
 from app.api import patient_actions, doctor_actions, system_actions
-
 from app.api import doctor_dashboard, patient_dashboard, admin_dashboard
 
 
-
 app = FastAPI()
+
+# CORS configuration so React (http://localhost:5173) can call the API
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth.router, prefix="/auth")
 app.include_router(patient.router, prefix="/patient")
