@@ -20,8 +20,8 @@ export default function Dashboard() {
   return (
     <PatientLayout>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((s) => (
-          <StatCard key={s.title} title={s.title} value={s.value} />
+        {stats.map((s, index) => (
+          <StatCard key={s.title} title={s.title} value={s.value} index={index} />
         ))}
       </div>
     </PatientLayout>

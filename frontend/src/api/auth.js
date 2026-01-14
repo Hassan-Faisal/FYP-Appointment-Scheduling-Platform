@@ -15,14 +15,19 @@ export const signupPatient = async (data) => {
   return response.data;
 };
 
-// FORGOT PASSWORD
-export const forgotPassword = async (email) => {
-  const response = await api.post("/auth/forgot-password", {
-    email,
-  });
-  return response.data;
-};
+// // FORGOT PASSWORD
+// export const forgotPassword = async (email) => {
+//   const response = await api.post("/auth/forgot-password", {
+//     email,
+//   });
+//   return response.data;
+// };
 
+export const forgotPassword = async (email) => {
+    const response = await api.post(`/auth/forgot-password?email=${encodeURIComponent(email)}`);
+    return response.data;
+  };
+  
 
 export const verifyEmail = (token) =>
   api.get(`/auth/verify-email?token=${token}`);
