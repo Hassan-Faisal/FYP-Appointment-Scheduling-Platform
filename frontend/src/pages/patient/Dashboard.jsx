@@ -1,13 +1,21 @@
+import { useEffect, useState } from "react";
 import PatientLayout from "../../layouts/PatientLayout";
 import StatCard from "../../components/StatCard";
+import { getPatientStats } from "../../api/patient";
 
 export default function Dashboard() {
-  const stats = [
-    { title: "Upcoming Appointments", value: 3 },
-    { title: "Missed Appointments", value: 1 },
-    { title: "Completed Visits", value: 5 },
-    { title: "Cancelled Appointments", value: 0 },
-  ];
+  const [stats, setStats] = useState([]);
+
+  useEffect(() => {
+    getPatientStats().then((res) => {
+      setStats([
+        { title: "Upcoming Appointments", value: res.data.upcoming },
+        { title: "Missed Appointments", value: res.data.no_show },
+        { title: "Completed Visits", value: res.data.completed },
+        { title: "Cancelled Appointments", value: res.data.cancelled },
+      ]);
+    });
+  }, []);
 
   return (
     <PatientLayout>

@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Boolean
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 import uuid
 
@@ -15,3 +16,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     is_email_verified = Column(Boolean, default=False)
     email_verification_token = Column(String, nullable=True)
+
+    # Relationships
+    patient_profile = relationship("PatientProfile", back_populates="user", uselist=False)
+    doctor_profile = relationship("DoctorProfile", back_populates="user", uselist=False)

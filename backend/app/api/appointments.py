@@ -1,30 +1,36 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from datetime import date
 from app.core.database import get_db
-from app.core.dependencies import require_role
 from app.models.appointment import Appointment
+from app.core.dependencies import get_current_user
 
-router = APIRouter()
+router = APIRouter(prefix="/appointments", tags=["Appointments"])
 
-@router.post("/book")
-def book_appointment(
-    doctor_id: str,
-    appointment_date: date,
-    start_time: str,
-    end_time: str,
+@router.get("/my")
+def get_my_appointments(
     db: Session = Depends(get_db),
-    user=Depends(require_role("patient"))
+    user=Depends(get_current_user)
 ):
-    appointment = Appointment(
-        patient_id=user["sub"],
-        doctor_id=doctor_id,
-        appointment_date=appointment_date,
-        start_time=start_time,
-        end_time=end_time,
-        status="booked"
-    )
+    return db.query(Appointment)\
+        .filter(Appointment.patient_id == user.id)\
+        .order_by(Appointment.date.desc())\
+        .all()
 
-    db.add(appointment)
+
+@router.post("/{appointment_id}/cancel")
+def cancel_appointment(
+    appointment_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user)
+):
+    appointment = db.query(Appointment).filter(
+        Appointment.id == appointment_id,
+        Appointment.patient_id == user.id
+    ).first()
+
+    if not appointment:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+
+    appointment.status = "cancelled"
     db.commit()
-    return {"message": "Appointment booked"}
+    return {"message": "Appointment cancelled"}

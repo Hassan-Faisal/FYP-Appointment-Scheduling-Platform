@@ -10,3 +10,68 @@ CREATE TABLE users (
 );
 
 
+CREATE TABLE patient_profiles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    full_name VARCHAR(200),
+    phone VARCHAR(50),
+    date_of_birth DATE,
+    gender VARCHAR(10),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE doctor_profiles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    full_name VARCHAR(200),
+    specialization VARCHAR(200),
+    experience_years INT,
+    consultation_fee NUMERIC,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE doctor_availability (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    doctor_id UUID REFERENCES doctor_profiles(id),
+    day_of_week INT CHECK (day_of_week BETWEEN 0 AND 6),
+    start_time TIME,
+    end_time TIME
+);
+
+CREATE TABLE doctor_breaks (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    doctor_id UUID REFERENCES doctor_profiles(id),
+    break_start TIME,
+    break_end TIME
+);
+
+CREATE TABLE appointments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    patient_id UUID REFERENCES patient_profiles(id),
+    doctor_id UUID REFERENCES doctor_profiles(id),
+    appointment_date DATE,
+    start_time TIME,
+    end_time TIME,
+    status VARCHAR(20) CHECK (status IN ('booked','cancelled','completed','no_show')),
+    ai_score NUMERIC, -- no-show probability
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ai_history (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    patient_id UUID,
+    doctor_id UUID,
+    appointment_id UUID,
+    was_no_show BOOLEAN,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE email_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id),
+    subject TEXT,
+    status VARCHAR(20),
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+

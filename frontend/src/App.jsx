@@ -9,6 +9,7 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 import PatientDashboard from "./pages/patient/Dashboard";
 import BookAppointment from "./pages/patient/BookAppointment";
 import MyAppointments from "./pages/patient/MyAppointments";
+import Profile from "./pages/patient/Profile";
 
 // Doctor Pages
 import DoctorDashboard from "./pages/doctor/Dashboard";
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/patient/dashboard" element={<PatientDashboard />} />
         <Route path="/patient/book" element={<BookAppointment />} />
         <Route path="/patient/appointments" element={<MyAppointments />} />
+        <Route path="/patient/profile" element={<Profile/>}/>
 
         {/* Doctor */}
         <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
