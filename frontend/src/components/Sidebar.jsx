@@ -61,6 +61,7 @@ export default function Sidebar({ links }) {
             className="bg-gradient-to-br from-blue-300 to-blue-600 p-3 rounded-xl shadow-lg"
           >
             <Stethoscope className="w-6 h-6 text-white" />
+            {/* <img src="/logo.jpg" alt="logo" className="w-8 h-8" /> */}
           </motion.div>
           <div>
             <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">

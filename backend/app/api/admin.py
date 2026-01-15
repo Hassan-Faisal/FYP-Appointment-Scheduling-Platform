@@ -2,21 +2,38 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.dependencies import require_role
-from app.services.auth_service import create_user
-from app.models.doctor import DoctorProfile
+from app.services.admin_service import *
 
-router = APIRouter()
+router = APIRouter(prefix="/admin", tags=["Admin"])
 
-@router.post("/create-doctor")
-def create_doctor(email: str, password: str, full_name: str, specialization: str, db: Session = Depends(get_db), user=Depends(require_role("admin"))):
-    user = create_user(db, email, password, "doctor")
 
-    doctor = DoctorProfile(
-        user_id=user.id,
-        full_name=full_name,
-        specialization=specialization
-    )
-    db.add(doctor)
-    db.commit()
+@router.post("/create-doctor", dependencies=[Depends(require_role("admin"))])
+def create_doctor_api(payload: dict, db: Session = Depends(get_db)):
+    return create_doctor(db, payload)
 
-    return {"message": "Doctor created"}
+@router.patch("/user/{user_id}/block", dependencies=[Depends(require_role("admin"))])
+def block_user(user_id: str, db: Session = Depends(get_db)):
+    toggle_user(db, user_id, False)
+    return {"message": "User blocked"}
+
+@router.patch("/user/{user_id}/unblock", dependencies=[Depends(require_role("admin"))])
+def unblock_user(user_id: str, db: Session = Depends(get_db)):
+    toggle_user(db, user_id, True)
+    return {"message": "User unblocked"}
+
+@router.get("/users", dependencies=[Depends(require_role("admin"))])
+def list_users(role: str, db: Session = Depends(get_db)):
+    return db.query(User).filter(User.role == role).all()
+
+@router.get("/appointments", dependencies=[Depends(require_role("admin"))])
+def all_appointments(db: Session = Depends(get_db)):
+    return db.query(Appointment).all()
+
+@router.patch("/appointment/{id}/reschedule", dependencies=[Depends(require_role("admin"))])
+def force_reschedule(id: str, payload: dict, db: Session = Depends(get_db)):
+    reschedule(db, id, payload)
+    return {"message": "Rescheduled"}
+
+@router.get("/dashboard-stats", dependencies=[Depends(require_role("admin"))])
+def dashboard(db: Session = Depends(get_db)):
+    return admin_stats(db)

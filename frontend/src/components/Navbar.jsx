@@ -34,10 +34,16 @@ export default function Navbar() {
 
   const getPageTitle = () => {
     const path = location.pathname;
-    if (path.includes("dashboard")) return "Dashboard";
-    if (path.includes("book")) return "Book Appointment";
-    if (path.includes("appointments")) return "My Appointments";
-    if (path.includes("profile")) return "Profile";
+    // Patient routes
+    if (path.includes("patient/dashboard")) return "Dashboard";
+    if (path.includes("patient/book")) return "Book Appointment";
+    if (path.includes("patient/appointments")) return "My Appointments";
+    if (path.includes("patient/profile")) return "Profile";
+    // Doctor routes
+    if (path === "/doctor" || path.includes("doctor/dashboard")) return "Dashboard";
+    if (path.includes("doctor/today")) return "Today's Appointments";
+    if (path.includes("doctor/future")) return "Upcoming Appointments";
+    if (path.includes("doctor/history")) return "Appointment History";
     return "Dashboard";
   };
 

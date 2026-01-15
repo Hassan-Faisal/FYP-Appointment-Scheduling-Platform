@@ -13,8 +13,9 @@ import Profile from "./pages/patient/Profile";
 
 // Doctor Pages
 import DoctorDashboard from "./pages/doctor/Dashboard";
-// import Today from "./pages/doctor/Today";
-// import History from "./pages/doctor/History";
+import Today from "./pages/doctor/Today";
+import History from "./pages/doctor/History";
+import Future from "./pages/doctor/Future";
 
 // Admin Pages
 // import AdminDashboard from "./pages/admin/Dashboard";
@@ -40,8 +41,9 @@ export default function App() {
 
         {/* Doctor */}
         <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
-        {/* <Route path="/doctor/today" element={<Today />} /> */}
-        {/* <Route path="/doctor/history" element={<History />} /> */}
+        <Route path="/doctor/today" element={<Today />} /> 
+        <Route path="/doctor/history" element={<History />} />
+        <Route path="/doctor/future" element={<Future />} />
 
         {/* Admin */}
         {/* <Route path="/admin/dashboard" element={<AdminDashboard />} />
