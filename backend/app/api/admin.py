@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.dependencies import require_role
 from app.services.admin_service import *
+from app.models.user import User
+from app.models.appointment import Appointment
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 

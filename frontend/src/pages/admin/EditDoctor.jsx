@@ -1,25 +1,24 @@
-export default function CreateDoctor({ open, onClose, onCreate }) {
-    if (!open) return null;
+export default function EditDoctor({ open, doctor, onClose, onSave }) {
+    if (!open || !doctor) return null;
   
     return (
       <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
         <div className="bg-white p-6 rounded-xl w-[420px]">
-          <h2 className="text-lg font-bold mb-4">Create Doctor</h2>
+          <h2 className="text-lg font-bold mb-4">Update Doctor</h2>
   
           {[
             ["full_name", "Full Name"],
-            ["email", "Email"],
-            ["password", "Password"],
             ["specialization", "Specialization"],
-            ["experience_years", "Experience (Years)"],
+            ["experience_years", "Experience Years"],
             ["consultation_fee", "Consultation Fee"],
           ].map(([key, label]) => (
             <input
               key={key}
+              defaultValue={doctor[key]}
               placeholder={label}
               className="border p-2 w-full mb-3"
               onChange={(e) =>
-                onCreate((prev) => ({ ...prev, [key]: e.target.value }))
+                onSave((prev) => ({ ...prev, [key]: e.target.value }))
               }
             />
           ))}
@@ -29,10 +28,10 @@ export default function CreateDoctor({ open, onClose, onCreate }) {
               Cancel
             </button>
             <button
-              onClick={() => onCreate("submit")}
-              className="px-4 py-2 bg-blue-600 text-white rounded"
+              onClick={() => onSave("submit")}
+              className="px-4 py-2 bg-green-600 text-white rounded"
             >
-              Create
+              Save
             </button>
           </div>
         </div>

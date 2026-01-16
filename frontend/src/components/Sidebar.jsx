@@ -6,7 +6,10 @@ import {
   Calendar, 
   CalendarCheck, 
   User,
-  Stethoscope
+  Stethoscope,
+  Users,
+  CalendarDays,
+  Settings
 } from "lucide-react";
 
 const iconMap = {
@@ -14,6 +17,13 @@ const iconMap = {
   "Book Appointment": Calendar,
   "My Appointments": CalendarCheck,
   "Profile": User,
+  "Doctors": Stethoscope,
+  "Patients": Users,
+  "Appointments": CalendarDays,
+  "Schedule": Calendar,
+  "Today": Calendar,
+  "Future": CalendarDays,
+  "History": CalendarCheck,
 };
 
 const sidebarVariants = {
@@ -41,6 +51,19 @@ const linkVariants = {
 
 export default function Sidebar({ links }) {
   const location = useLocation();
+  
+  // Determine portal type based on current path
+  const getPortalInfo = () => {
+    if (location.pathname.startsWith("/admin")) {
+      return { title: "Clinic", subtitle: "Admin Portal" };
+    } else if (location.pathname.startsWith("/doctor")) {
+      return { title: "Clinic", subtitle: "Doctor Portal" };
+    } else {
+      return { title: "Clinic", subtitle: "Patient Portal" };
+    }
+  };
+  
+  const portalInfo = getPortalInfo();
 
   return (
     <motion.div
@@ -65,9 +88,9 @@ export default function Sidebar({ links }) {
           </motion.div>
           <div>
             <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-              Clinic
+              {portalInfo.title}
             </h2>
-            <p className="text-xs text-gray-500">Patient Portal</p>
+            <p className="text-xs text-gray-500">{portalInfo.subtitle}</p>
           </div>
         </div>
       </motion.div>
@@ -137,7 +160,7 @@ export default function Sidebar({ links }) {
         className="p-4 border-t border-gray-200 bg-gray-50/50"
       >
         <div className="text-xs text-gray-500 text-center">
-          <p className="font-semibold text-gray-700">Patient Portal</p>
+          <p className="font-semibold text-gray-700">{portalInfo.subtitle}</p>
           <p className="mt-1">© 2024 Clinic System</p>
         </div>
       </motion.div>

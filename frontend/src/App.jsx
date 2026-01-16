@@ -18,10 +18,11 @@ import History from "./pages/doctor/History";
 import Future from "./pages/doctor/Future";
 
 // Admin Pages
-// import AdminDashboard from "./pages/admin/Dashboard";
-// import Doctors from "./pages/admin/Doctors";
-// import CreateDoctor from "./pages/admin/CreateDoctor";
-// import Appointments from "./pages/admin/Appointments";
+import AdminDashboard from "./pages/admin/Dashboard";
+import Doctors from "./pages/admin/Doctors";
+import Appointments from "./pages/admin/Appointments";
+import Schedule from "./pages/admin/Schedule";
+import Patients from "./pages/admin/Patients";
 
 export default function App() {
   return (
@@ -46,10 +47,11 @@ export default function App() {
         <Route path="/doctor/future" element={<Future />} />
 
         {/* Admin */}
-        {/* <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/doctors" element={<Doctors />} />
-        <Route path="/admin/create-doctor" element={<CreateDoctor />} /> */}
-        {/* <Route path="/admin/appointments" element={<Appointments />} /> */}
+         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+         <Route path="/admin/doctors" element={<Doctors />} />
+        <Route path="/admin/patients" element={<Patients />} />
+        <Route path="/admin/appointments" element={<Appointments />} /> 
+        <Route path="/admin/schedule" element={<Schedule />} />
       </Routes>
     </Router>
   );

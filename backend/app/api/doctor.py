@@ -38,7 +38,10 @@ def dashboard_stats(
     user=Depends(get_current_user)
 ):
     if not user.doctor_profile:
-        raise HTTPException(status_code=404, detail="Doctor profile not found. Please complete your profile setup.")
+        raise HTTPException(
+            status_code=400, 
+            detail="Doctor profile not found. Please complete your profile setup."
+        )
     return doctor_dashboard_stats(db, user.doctor_profile.id)
 
 
