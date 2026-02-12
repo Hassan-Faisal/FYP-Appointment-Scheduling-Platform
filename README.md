@@ -1,9 +1,9 @@
 # AI-Powered Appointment Management System for Healthcare Professionals
 
-A full-stack, **AI-enhanced** web platform designed to streamline appointment scheduling in healthcare settings. The system helps reduce no-shows, optimize provider schedules, improve patient experience, and minimize administrative workload using intelligent features like no-show prediction, smart slot recommendations, automated reminders, and real-time notifications.
+A full-stack, **AI-enhanced** web platform designed to streamline appointment scheduling in healthcare settings. The system helps reduce no-shows, optimize provider schedules, improve patient experience, and minimize administrative workload using intelligent features like no-show prediction, automated reminders, and real-time notifications.
 
 **Final Year Project (FYP)** — Bachelor of Science in Computer Science (2022–2025)  
-**Students**: Muhammad Hassan Faisal (2221108), Taimoor Anjum (2221023)  
+**Student**:  Hassan Faisal
 **Supervisor**: Dr. Fahad Ahmad  
 **Institution**: National College of Business Administration & Economics (NCBA&E)
 
